@@ -22,6 +22,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Cart } from "../../Container/Container";
 import { SnackbarAlert } from "../../Container/Container";
+import { DialogContent } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
     height: "32px",
     padding: "2px 8px",
   },
-  container:{
-      justifyContent:"space-between",
-      alignItems:"baseline",
-      position:"relative"
-  }
+  container: {
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    position: "relative",
+  },
 }));
 
 function BodyCard({ books }) {
@@ -108,15 +109,6 @@ function BodyCard({ books }) {
   const handleClose = (value) => {
     setOpen(false);
   };
-
-  // React.useEffect(() => {
-  //   if (cart.length > 3) {
-  //     setOpenSnackBar(true);
-  //     setSnackBarMessage("Student is not authorized to add more than 3 Books!");
-  //     setmultiButton(false);
-  //     setAlertType("info");
-  //   }
-  // }, [[cart, setCart]]);
 
   // Function to keep wishlist
   const wishlist = (e, value) => {
@@ -166,9 +158,16 @@ function BodyCard({ books }) {
         setAlertType("info");
       } else {
         if (cart.indexOf(value) == -1) {
-          setCart((cart) => [...cart, value]);
-          localStorage.setItem("studCartlength", cart.length + 1);
-          localStorage.setItem("studCart", JSON.stringify(cart));
+          if (profCart.indexOf(value) == -1) {
+            setCart((cart) => [...cart, value]);
+            localStorage.setItem("studCartlength", cart.length + 1);
+            localStorage.setItem("studCart", JSON.stringify(cart));
+          } else {
+            setOpenSnackBar(true);
+            setSnackBarMessage("Book already been added by others!");
+            setmultiButton(false);
+            setAlertType("info");
+          }
         } else {
           setOpenSnackBar(true);
           setSnackBarMessage("Book already added in the cart!");
@@ -178,9 +177,16 @@ function BodyCard({ books }) {
       }
     } else {
       if (profCart.indexOf(value) == -1) {
-        setprofCart((profCart) => [...profCart, value]);
-        localStorage.setItem("profCartlength", profCart.length + 1);
-        localStorage.setItem("profCart", JSON.stringify(profCart));
+        if (cart.indexOf(value) == -1) {
+          setprofCart((profCart) => [...profCart, value]);
+          localStorage.setItem("profCartlength", profCart.length + 1);
+          localStorage.setItem("profCart", JSON.stringify(profCart));
+        } else {
+          setOpenSnackBar(true);
+          setSnackBarMessage("Book already been added by others!");
+          setmultiButton(false);
+          setAlertType("info");
+        }
       } else {
         setOpenSnackBar(true);
         setSnackBarMessage("Book already added in the cart!");
@@ -257,16 +263,18 @@ function BodyCard({ books }) {
               >
                 WishList
               </DialogTitle>
-              <ul className={classes.order}>
-                <li>
-                  <b>Student :</b>
-                  {studentCard != undefined ? studentCard.length : 0}
-                </li>
-                <li>
-                  <b>Professor :</b>
-                  {professorCard != undefined ? professorCard.length : 0}
-                </li>
-              </ul>
+              <DialogContent>
+                Books:
+                <ul>
+                  {state == "Student"
+                    ? studentCard.map((list, item) => {
+                        return <li>{list.title}</li>;
+                      })
+                    : professorCard.map((list, item) => {
+                        return <li>{list.title}</li>;
+                      })}
+                </ul>
+              </DialogContent>
             </Dialog>
           </Grid>
           <Grid xs={4}>
@@ -359,10 +367,6 @@ function BodyCard({ books }) {
           </Grid>
         </Paper>
       </div>
-
-      {/* <Grid container>
-       
-      </Grid> */}
     </div>
   );
 }

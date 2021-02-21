@@ -55,18 +55,18 @@ export default function Footer() {
           </h4>
           <p style={{ fontSize: "12px" }}>
             {" "}
-            <a target="_blank" href="https://www.facebook.com/carenowdoc/">
+            <a target="_blank" href="https://www.facebook.com">
               <FacebookIcon />
             </a>{" "}
             <a
               target="_blank"
-              href="https://www.instagram.com/carenow.healthcare/"
+              href="https://www.instagram.com"
             >
               <InstagramIcon />
             </a>{" "}
             <a
               target="_blank"
-              href="https://www.youtube.com/channel/UCqJSrY_NEnauSr5Cc66G1AA"
+              href="https://www.youtube.com"
             >
               <YouTubeIcon />
             </a>{" "}

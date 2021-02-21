@@ -15,6 +15,11 @@ const useStyles = makeStyles({
 function Header() {
   const classes = useStyles();
 
+  const exit =  () =>{
+    localStorage.clear()
+    window.reload()
+  }
+
   return (
     <div>
       <header className="header">
@@ -54,7 +59,7 @@ function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" onClick={()=>localStorage.clear()} href="/">
+                <a className="nav-link" onClick={exit} href="/">
                   Exit
                 </a>
               </li>
