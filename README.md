@@ -17,4 +17,4 @@ A Small Lending Library with Material UI
 
 
 ## DEPLOYABLE LINK
-library-lending.netlify.app
+https://library-lending.netlify.app/
